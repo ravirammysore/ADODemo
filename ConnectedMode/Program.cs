@@ -24,13 +24,13 @@ class Program
             using (SqlConnection connection = new SqlConnection(ConString))
             {
                 // Creating SqlCommand objcet   
-                SqlCommand cm = new SqlCommand("select * from student", connection);
+                var cm = new SqlCommand("select * from student", connection);
 
                 // Opening Connection  
                 connection.Open();
 
                 // Executing the SQL query  
-                SqlDataReader sdr = cm.ExecuteReader();
+                var sdr = cm.ExecuteReader();
                 while (sdr.Read())
                     Console.WriteLine(sdr["Name"] + ",  " + sdr["Email"] + ",  " + sdr["Mobile"]);
             }
@@ -46,10 +46,10 @@ class Program
         {
             using (SqlConnection connection = new SqlConnection(ConString))
             {
-                SqlCommand cmd = new SqlCommand("insert into Student values (105, 'Ramesh', 'Ramesh@dotnettutorial.net', '1122334455')", connection);
+                var cmd = new SqlCommand("insert into Student values (105, 'Ramesh', 'Ramesh@dotnettutorial.net', '1122334455')", connection);
                 connection.Open();
                 
-                int rowsAffected = cmd.ExecuteNonQuery();
+                var rowsAffected = cmd.ExecuteNonQuery();
                 Console.WriteLine("Inserted Rows = " + rowsAffected);
             }
         }

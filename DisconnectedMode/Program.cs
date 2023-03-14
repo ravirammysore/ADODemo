@@ -24,28 +24,26 @@ class Program
             using (SqlConnection connection = new SqlConnection(ConString))
             {
                 //Create the SqlDataAdapter instance by specifying the command text and connection object
-                SqlDataAdapter dataAdapter = new SqlDataAdapter("select * from student", connection);
+                var dataAdapter = new SqlDataAdapter("select * from student", connection);
+                
                 //Creating DataSet Object
-                DataSet dataSet = new DataSet();
+                var dataSet = new DataSet();
+                
                 //Filling the DataSet using the Fill Method of SqlDataAdapter object
                 //Here, we have not specified the data table name and the data table will be created at index position 0
                 dataAdapter.Fill(dataSet);
+                
                 //Iterating through the DataSet 
                 //First fetch the Datatable from the dataset and then fetch the rows using the Rows property of Datatable
                 foreach (DataRow row in dataSet.Tables[0].Rows)
-                {
                     //Accessing the Data using the string column name as key
                     Console.WriteLine(row["Id"] + ",  " + row["Name"] + ",  " + row["Email"]);
-                    //Accessing the Data using the integer index position as key
-                    //Console.WriteLine(row["Id"] + ",  " + row["Name"] + ",  " + row["Mobile"]);
-                }
             }
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Exception Occurred: {ex.Message}");
         }
-        Console.ReadKey();
     }
     static void WriteData()
     {
@@ -54,33 +52,28 @@ class Program
             using (SqlConnection connection = new SqlConnection(ConString))
             {
                 //Create the SqlDataAdapter instance by specifying the command text and connection object
-                SqlDataAdapter dataAdapter = new SqlDataAdapter("SELECT * FROM Student", connection);
+                var dataAdapter = new SqlDataAdapter("SELECT * FROM Student", connection);
 
                 // At this point SqlCommandBuilder should generate T-SQL statements automatically
-                SqlCommandBuilder commandBuilder = new SqlCommandBuilder(dataAdapter);
+                var commandBuilder = new SqlCommandBuilder(dataAdapter);
 
                 //Creating DataSet Object
-                DataSet dataSet = new DataSet();
+                var dataSet = new DataSet();
                 //Filling the DataSet using the Fill Method of SqlDataAdapter object
                 dataAdapter.Fill(dataSet);
 
                 //Now Update First Row i.e. Index Position 0
-                DataRow dataRow = dataSet.Tables[0].Rows[0];
+                var dataRow = dataSet.Tables[0].Rows[0];
                 dataRow["Name"] = "Name Updated";
 
                 //Provide the DataSet and the DataTable name to the Update method
                 //Here, SqlCommandBuilder will automatically generate the UPDATE SQL Statement 
-                int rowsUpdated = dataAdapter.Update(dataSet, dataSet.Tables[0].TableName);
+                var rowsUpdated = dataAdapter.Update(dataSet, dataSet.Tables[0].TableName);
 
                 if (rowsUpdated == 0)
-                {
                     Console.WriteLine("\nNo Rows Updated");
-                }
                 else
-                {
                     Console.WriteLine($"\n{rowsUpdated} Row(s) Updated");
-                }
-
             }
         }
         catch (Exception e)
